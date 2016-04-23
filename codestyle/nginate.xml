@@ -1,0 +1,11 @@
+<code_scheme name="nginate">
+    <option name="FORMATTER_TAGS_ENABLED" value="true"/>
+    <XML>
+        <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true"/>
+    </XML>
+    <codeStyleSettings language="JAVA">
+        <option name="ALIGN_MULTILINE_PARAMETERS" value="false"/>
+        <option name="METHOD_CALL_CHAIN_WRAP" value="5"/>
+        <option name="WRAP_LONG_LINES" value="true"/>
+    </codeStyleSettings>
+</code_scheme>
