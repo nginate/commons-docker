@@ -65,8 +65,10 @@ public class DockerClient {
 
     public String createContainer(CreateContainerOptions options) {
         CreateContainerResponse response = toCreateContainerCmd(client, options).exec();
-        for (String warning : response.getWarnings()) {
-            log.warn(warning);
+        if (response.getWarnings() != null) {
+            for (String warning : response.getWarnings()) {
+                log.warn(warning);
+            }
         }
         return response.getId();
     }
