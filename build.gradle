@@ -22,15 +22,18 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
     jcenter()
+    mavenLocal()
 }
 
 dependencies {
+    compile "com.github.nginate:commons-lang:1.0-SNAPSHOT"
+    compile 'com.github.docker-java:docker-java:2.2.3'
     compile 'org.slf4j:slf4j-api:1.7.21'
 
     // Utils
     compile 'com.google.guava:guava:19.0'
     compile 'org.apache.commons:commons-lang3:3.4'
-    compile 'commons-beanutils:commons-beanutils:1.9.2'
+    compile 'org.apache.commons:commons-collections4:4.1'
 
     // Annotation processors
     compile 'org.projectlombok:lombok:1.16.8', optional
