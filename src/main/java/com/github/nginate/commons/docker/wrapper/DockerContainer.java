@@ -3,7 +3,7 @@ package com.github.nginate.commons.docker.wrapper;
 import com.github.dockerjava.api.command.InspectContainerResponse;
 import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.Ports;
-import com.github.nginate.commons.docker.client.DockerClient;
+import com.github.nginate.commons.docker.client.NDockerClient;
 import com.github.nginate.commons.docker.client.options.RemoveContainerOptions;
 import com.github.nginate.commons.lang.function.unchecked.RuntimeIOException;
 import lombok.RequiredArgsConstructor;
@@ -24,28 +24,28 @@ import static java.nio.file.Files.newBufferedWriter;
 @RequiredArgsConstructor
 public class DockerContainer {
 
-    private final DockerClient dockerClient;
+    private final NDockerClient nDockerClient;
     private final String containerId;
 
     public void start() {
-        dockerClient.startContainer(containerId);
+        nDockerClient.startContainer(containerId);
     }
 
     public void stop() {
-        dockerClient.stopContainer(containerId);
+        nDockerClient.stopContainer(containerId);
     }
 
     public void kill() {
-        dockerClient.killContainer(containerId);
+        nDockerClient.killContainer(containerId);
     }
 
     public void remove() {
         RemoveContainerOptions options = RemoveContainerOptions.builder().force(true).removeVolume(true).build();
-        dockerClient.removeContainer(containerId, options);
+        nDockerClient.removeContainer(containerId, options);
     }
 
     public InspectContainerResponse inspect() {
-        return dockerClient.inspectContainer(containerId);
+        return nDockerClient.inspectContainer(containerId);
     }
 
     public String getName() {
@@ -59,7 +59,7 @@ public class DockerContainer {
     public void printLogs() {
         String name = getName();
         log.info("\n\nContainer logs start for {} \n\n", name);
-        dockerClient.logContainer(containerId, log::info);
+        nDockerClient.logContainer(containerId, log::info);
         log.info("\n\nContainer logs end for {} \n\n", name);
     }
 
@@ -72,7 +72,7 @@ public class DockerContainer {
     }
 
     public void consumeLogs(Consumer<String> consumer) {
-        dockerClient.logContainer(containerId, consumer);
+        nDockerClient.logContainer(containerId, consumer);
     }
 
     public String getIp() {

@@ -2,7 +2,7 @@ package com.github.nginate.commons.docker;
 
 import com.github.dockerjava.core.DockerClientImpl;
 import com.github.dockerjava.jaxrs.DockerCmdExecFactoryImpl;
-import com.github.nginate.commons.docker.client.DockerClient;
+import com.github.nginate.commons.docker.client.NDockerClient;
 import com.github.nginate.commons.docker.client.options.CreateContainerOptions;
 import com.github.nginate.commons.docker.client.options.ListContainersOptions;
 import com.github.nginate.commons.docker.client.options.RemoveContainerOptions;
@@ -17,11 +17,11 @@ import java.util.Optional;
 @Slf4j
 public class DockerUtils {
 
-    public static DockerContainer wrapContainer(DockerClient client, String containerId) {
+    public static DockerContainer wrapContainer(NDockerClient client, String containerId) {
         return new DockerContainer(client, containerId);
     }
 
-    public static Optional<DockerContainer> findContainer(DockerClient client, String containerName) {
+    public static Optional<DockerContainer> findContainer(NDockerClient client, String containerName) {
         ListContainersOptions listContainersOptions = ListContainersOptions.builder().showAll(true).build();
 
         return client.listContainers(listContainersOptions).stream()
@@ -30,11 +30,11 @@ public class DockerUtils {
                 .findAny();
     }
 
-    public static DockerContainer createContainer(DockerClient client, CreateContainerOptions options) {
+    public static DockerContainer createContainer(NDockerClient client, CreateContainerOptions options) {
         return new DockerContainer(client, client.createContainer(options));
     }
 
-    public static DockerContainer forceCreateContainer(DockerClient client, CreateContainerOptions options) {
+    public static DockerContainer forceCreateContainer(NDockerClient client, CreateContainerOptions options) {
         ListContainersOptions listContainersOptions = ListContainersOptions.builder().showAll(true).build();
 
         client.listContainers(listContainersOptions).stream()
@@ -53,9 +53,9 @@ public class DockerUtils {
         return createContainer(client, options);
     }
 
-    public static DockerClient createClient(String serverUrl) {
+    public static NDockerClient createClient(String serverUrl) {
         DockerClientImpl client = DockerClientImpl.getInstance(serverUrl)
                 .withDockerCmdExecFactory(new DockerCmdExecFactoryImpl());
-        return new DockerClient(client);
+        return new NDockerClient(client);
     }
 }

@@ -1,5 +1,6 @@
 package com.github.nginate.commons.docker.client;
 
+import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.*;
 import com.github.dockerjava.api.model.Container;
 import com.github.dockerjava.api.model.ExposedPort;
@@ -26,9 +27,9 @@ import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 @Slf4j
 @RequiredArgsConstructor
-public class DockerClient {
+public class NDockerClient {
 
-    private final com.github.dockerjava.api.DockerClient client;
+    private final DockerClient client;
 
     public void pullImage(String repository) {
         client.pullImageCmd(repository)
@@ -116,7 +117,7 @@ public class DockerClient {
                 .awaitCompletion();
     }
 
-    public static CreateContainerCmd toCreateContainerCmd(com.github.dockerjava.api.DockerClient dockerClient,
+    public static CreateContainerCmd toCreateContainerCmd(DockerClient dockerClient,
             CreateContainerOptions config) {
         CreateContainerCmd createContainerCmd =
                 dockerClient.createContainerCmd(config.getImage())
