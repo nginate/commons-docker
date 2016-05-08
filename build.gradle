@@ -26,7 +26,7 @@ repositories {
 }
 
 dependencies {
-    compile "com.github.nginate:commons-lang:1.0-SNAPSHOT"
+    compile "com.github.nginate:commons-lang:1.0.0"
     compile 'com.github.docker-java:docker-java:2.2.3'
     compile 'org.slf4j:slf4j-api:1.7.21'
 
@@ -63,5 +63,5 @@ artifacts {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.12'
+    gradleVersion = '2.13'
 }
