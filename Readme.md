@@ -6,7 +6,7 @@ synchronizing container states and converting client dto classes.
 
 **Build status**
 
-[![Build Status](https://travis-ci.org/nginate/commons-docker.svg?branch=master)](https://travis-ci.org/nginate/commons-docker)
+[![][travis img]][travis] [![][jcenterbadge img]][jcenterbadge] [![][codecovbadge img]][codecovbadge] [![][dependencies img]][dependencies]
 
 **What's there in this bundle?**
 
@@ -62,3 +62,15 @@ encapsulated in another wrapper.
 <a href="http://www.wtfpl.net/"><img
        src="http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-4.png"
        width="80" height="15" alt="WTFPL" /></a>
+       
+[travis]:https://travis-ci.org/nginate/commons-docker
+[travis img]:https://travis-ci.org/nginate/commons-docker.svg?branch=master
+
+[jcenterbadge]:https://bintray.com/nginate/maven/commons-docker/_latestVersion
+[jcenterbadge img]:https://api.bintray.com/packages/nginate/maven/commons-docker/images/download.svg
+
+[codecovbadge]:https://codecov.io/gh/nginate/commons-docker
+[codecovbadge img]:https://codecov.io/gh/nginate/commons-docker/branch/master/graph/badge.svg
+
+[dependencies]:https://www.versioneye.com/user/projects/57372ca1a0ca350034be7c28
+[dependencies img]:https://www.versioneye.com/user/projects/57372ca1a0ca350034be7c28/badge.svg?style=flat
