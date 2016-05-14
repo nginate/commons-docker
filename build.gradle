@@ -17,6 +17,7 @@ plugins {
 
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'jacoco'
 apply plugin: "maven-publish"
 apply plugin: 'nebula.optional-base'
 apply plugin: 'com.github.ben-manes.versions'
@@ -54,6 +55,22 @@ dependencies {
 gradle.projectsEvaluated {
     tasks.withType(JavaCompile) {
         options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    }
+}
+
+pitest {
+    threads = 4
+    outputFormats = ['HTML']
+    mutateStaticInits = true
+    timestampedReports = false
+}
+
+jacocoTestReport {
+    group = "report"
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.enabled false
     }
 }
 
