@@ -3,7 +3,7 @@ jdk:
   - oraclejdk8
 before_install:
   - chmod +x gradlew
-script: ./gradlew check pitest
+script: ./gradlew check pitest jacocoTestReport
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 cache:
@@ -12,3 +12,5 @@ cache:
     - $HOME/.m2
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -F unittests
