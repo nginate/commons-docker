@@ -59,7 +59,8 @@ public class NDockerClient {
             cmd.withShowSize(options.getSize());
         }
         if (options.getFilters() != null) {
-            cmd.withFilters(options.getFilters());
+            // hack for backward compatibility. cmd.getFilters() returns mutable map
+            cmd.getFilters().putAll(options.getFilters());
         }
         return cmd.exec();
     }
@@ -111,8 +112,9 @@ public class NDockerClient {
 
     public void logContainer(String containerId, Consumer<String> logConsumer) {
         client.logContainerCmd(containerId)
-                .withStdOut()
-                .withStdErr()
+                .withStdOut(true)
+                .withStdErr(true)
+                .withFollowStream(true)
                 .exec(new DockerLogger(logConsumer))
                 .awaitCompletion();
     }
@@ -128,7 +130,7 @@ public class NDockerClient {
                         .withExposedPorts(config.getExposedPorts()
                                 .toArray(new ExposedPort[config.getExposedPorts().size()]))
                         .withLogConfig(config.getLogConfig())
-                        .withMemoryLimit(config.getMemoryLimit())
+                        .withMemory(config.getMemoryLimit())
                         .withMemorySwap(config.getMemorySwap())
                         .withNetworkDisabled(config.isNetworkDisabled())
                         .withPrivileged(config.isPrivileged())
@@ -153,7 +155,7 @@ public class NDockerClient {
         }
         Optional.ofNullable(config.getContainerIDFile()).ifPresent(createContainerCmd::withContainerIDFile);
         Optional.ofNullable(config.getCpuPeriod()).ifPresent(createContainerCmd::withCpuPeriod);
-        Optional.ofNullable(config.getCpuset()).ifPresent(createContainerCmd::withCpuset);
+        Optional.ofNullable(config.getCpusetCpus()).ifPresent(createContainerCmd::withCpusetCpus);
         Optional.ofNullable(config.getCpusetMems()).ifPresent(createContainerCmd::withCpusetMems);
         if (!isEmpty(config.getDevices())) {
             createContainerCmd.withDevices(config.getDevices());

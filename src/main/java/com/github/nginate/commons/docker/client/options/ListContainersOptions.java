@@ -1,8 +1,10 @@
 package com.github.nginate.commons.docker.client.options;
 
-import com.github.dockerjava.api.model.Filters;
 import lombok.Builder;
 import lombok.Value;
+
+import java.util.List;
+import java.util.Map;
 
 @Value
 @Builder
@@ -12,5 +14,5 @@ public class ListContainersOptions {
     private String since;
     private String before;
     private Boolean size;
-    private Filters filters;
+    private Map<String, List<String>> filters;
 }

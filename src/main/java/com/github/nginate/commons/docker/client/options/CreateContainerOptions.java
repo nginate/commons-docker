@@ -17,18 +17,19 @@ public class CreateContainerOptions {
     private String hostName;
     private String domainName;
     private String user;
-    private long memoryLimit = 0;
-    private long memorySwap = 0;
-    private int cpuShares = 0;
+    private long memoryLimit;
+    private long memorySwap;
+    private int cpuShares;
     private Integer cpuPeriod;
-    private String cpuset;
-    private boolean attachStdin = false;
-    private boolean attachStdout = false;
-    private boolean attachStderr = false;
+    private String cpusetCpus;
+    private String cpusetMems;
+    private boolean attachStdin;
+    private boolean attachStdout;
+    private boolean attachStderr;
     private String[] portSpecs;
-    private boolean tty = false;
-    private boolean stdinOpen = false;
-    private boolean stdInOnce = false;
+    private boolean tty;
+    private boolean stdinOpen;
+    private boolean stdInOnce;
     @Singular("env")
     private Map<String, String> env;
     private String[] cmd;
@@ -38,13 +39,12 @@ public class CreateContainerOptions {
     private List<Volume> volumes;
     private String workingDir;
     private String macAddress;
-    private boolean networkDisabled = false;
+    private boolean networkDisabled;
     @Singular("exposedPort")
     private List<ExposedPort> exposedPorts;
     private Map<String, String> labels;
-    private String cpusetMems;
     private Integer blkioWeight;
-    private Boolean oomKillDisable = false;
+    private final Boolean oomKillDisable = false;
 
     private Bind[] binds;
     private Link[] links;
@@ -71,7 +71,7 @@ public class CreateContainerOptions {
     public static class CreateContainerOptionsBuilder {
         public CreateContainerOptionsBuilder oneToOnePortBindings(Integer... ports) {
             portBindings = stream(ports)
-                    .map(port -> new PortBinding(new Ports.Binding(port), ExposedPort.tcp(port)))
+                    .map(port -> new PortBinding(new Ports.Binding(null, String.valueOf(port)), ExposedPort.tcp(port)))
                     .toArray(PortBinding[]::new);
             return this;
         }

@@ -1,17 +1,21 @@
 package com.github.nginate.commons.docker.wrapper;
 
 import com.github.dockerjava.api.command.InspectContainerResponse;
+import com.github.dockerjava.api.model.ContainerNetwork;
 import com.github.dockerjava.api.model.ExposedPort;
+import com.github.dockerjava.api.model.NetworkSettings;
 import com.github.dockerjava.api.model.Ports;
 import com.github.nginate.commons.docker.client.NDockerClient;
 import com.github.nginate.commons.docker.client.options.RemoveContainerOptions;
 import com.github.nginate.commons.lang.function.unchecked.RuntimeIOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -53,7 +57,7 @@ public class DockerContainer {
     }
 
     public boolean isRunning() {
-        return inspect().getState().isRunning();
+        return inspect().getState().getRunning();
     }
 
     public void printLogs() {
@@ -76,7 +80,11 @@ public class DockerContainer {
     }
 
     public String getIp() {
-        return inspect().getNetworkSettings().getIpAddress();
+        NetworkSettings networkSettings = inspect().getNetworkSettings();
+        Map<String, ContainerNetwork> networks = networkSettings.getNetworks();
+        ContainerNetwork network = Optional.ofNullable(networks.get("bridge"))
+                .orElse(networks.values().iterator().next());
+        return network.getIpAddress();
     }
 
     /**
@@ -90,7 +98,9 @@ public class DockerContainer {
         Ports ports = inspect().getNetworkSettings().getPorts();
         if (ports != null) {
             Ports.Binding[] hostBindings = ports.getBindings().get(ExposedPort.parse(servicePort));
-            return Optional.of(hostBindings[0].getHostPort());
+            String hostPortSpec = hostBindings[0].getHostPortSpec();
+            int firstHostPort = Integer.parseInt(StringUtils.substringBefore(hostPortSpec, "-"));
+            return Optional.ofNullable(firstHostPort);
         }
         return Optional.empty();
     }

@@ -23,7 +23,7 @@ import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 @Slf4j
 public class DockerUtils {
 
-    private static final String DOCKER_URI = getProperty("docker.uri", "DOCKER_HOST", "http://localhost:2375");
+    private static final String DOCKER_URI = getProperty("docker.uri", "DOCKER_HOST", "tcp://localhost:2375");
     private static final String DOCKER_CERTS_PATH = getProperty("docker.certs", null);
     private static final int DOCKER_READ_TIMEOUT = Integer.parseInt(getProperty("docker.read.timeout", "10000"));
     private static final int DOCKER_CONNECT_TIMEOUT = Integer.parseInt(getProperty("docker.connect.timeout", "500"));
@@ -103,7 +103,7 @@ public class DockerUtils {
 
     public static NDockerClient createClient(DockerClientOptions options) {
         DockerClientConfig.DockerClientConfigBuilder configBuilder = DockerClientConfig.createDefaultConfigBuilder()
-                .withUri(options.getDockerUri())
+                .withDockerHost(options.getDockerUri())
                 .withDockerCertPath(options.getDockerCertsPath());
 
         DockerCmdExecFactory dockerCmdExecFactory = new DockerCmdExecFactoryImpl()

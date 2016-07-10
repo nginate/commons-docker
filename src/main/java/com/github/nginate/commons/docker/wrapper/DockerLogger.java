@@ -1,6 +1,6 @@
 package com.github.nginate.commons.docker.wrapper;
 
-import com.github.dockerjava.api.DockerClientException;
+import com.github.dockerjava.api.exception.DockerClientException;
 import com.github.dockerjava.api.model.Frame;
 import com.github.dockerjava.core.async.ResultCallbackTemplate;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class DockerLogger extends ResultCallbackTemplate<DockerLogger, Frame> {
     }
 
     @Override
-    public DockerLogger awaitCompletion() throws DockerClientException {
+    public DockerLogger awaitCompletion() {
         try {
             return super.awaitCompletion();
         } catch (InterruptedException e) {
