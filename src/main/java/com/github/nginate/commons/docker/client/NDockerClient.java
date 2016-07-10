@@ -129,17 +129,17 @@ public class NDockerClient {
                         .withCpuShares(config.getCpuShares())
                         .withExposedPorts(config.getExposedPorts()
                                 .toArray(new ExposedPort[config.getExposedPorts().size()]))
-                        .withLogConfig(config.getLogConfig())
                         .withMemory(config.getMemoryLimit())
                         .withMemorySwap(config.getMemorySwap())
                         .withNetworkDisabled(config.isNetworkDisabled())
                         .withPrivileged(config.isPrivileged())
                         .withPublishAllPorts(config.isPublishAllPorts())
                         .withReadonlyRootfs(config.isReadonlyRootfs())
-                        .withRestartPolicy(config.getRestartPolicy())
                         .withStdInOnce(config.isStdInOnce())
                         .withStdinOpen(config.isStdinOpen())
                         .withTty(config.isTty());
+        Optional.ofNullable(config.getRestartPolicy()).ifPresent(createContainerCmd::withRestartPolicy);
+        Optional.ofNullable(config.getLogConfig()).ifPresent(createContainerCmd::withLogConfig);
         if (!isEmpty(config.getBinds())) {
             createContainerCmd.withBinds(config.getBinds());
         }
@@ -194,7 +194,7 @@ public class NDockerClient {
         if (isNotBlank(config.getPidMode())) {
             createContainerCmd.withPidMode(config.getPidMode());
         }
-        if (!isEmpty(config.getPortBindings())) {
+        if (!CollectionUtils.isEmpty(config.getPortBindings())) {
             createContainerCmd.withPortBindings(config.getPortBindings());
         }
         if (!isEmpty(config.getPortSpecs())) {

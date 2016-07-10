@@ -8,8 +8,6 @@ import lombok.Singular;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Arrays.stream;
-
 @Data
 @Builder(toBuilder = true)
 public class CreateContainerOptions {
@@ -44,13 +42,14 @@ public class CreateContainerOptions {
     private List<ExposedPort> exposedPorts;
     private Map<String, String> labels;
     private Integer blkioWeight;
-    private final Boolean oomKillDisable = false;
+    private Boolean oomKillDisable;
 
     private Bind[] binds;
     private Link[] links;
     private LxcConf[] lxcConf;
     private LogConfig logConfig;
-    private PortBinding[] portBindings;
+    @Singular
+    private List<PortBinding> portBindings;
     private boolean publishAllPorts;
     private boolean privileged;
     private boolean readonlyRootfs;
@@ -69,11 +68,20 @@ public class CreateContainerOptions {
     private String pidMode;
 
     public static class CreateContainerOptionsBuilder {
-        public CreateContainerOptionsBuilder oneToOnePortBindings(Integer... ports) {
-            portBindings = stream(ports)
-                    .map(port -> new PortBinding(new Ports.Binding(null, String.valueOf(port)), ExposedPort.tcp(port)))
-                    .toArray(PortBinding[]::new);
-            return this;
+        public CreateContainerOptionsBuilder portsBinding(Integer hostPort, Integer exposedPort) {
+            return portsBinding(hostPort, ExposedPort.tcp(exposedPort));
+        }
+
+        public CreateContainerOptionsBuilder portsBinding(Integer hostPort, ExposedPort exposedPort) {
+            return portBinding(new PortBinding(new Ports.Binding(null, String.valueOf(hostPort)), exposedPort));
+        }
+
+        public CreateContainerOptionsBuilder portOneToOneBinding(Integer port) {
+            return portOneToOneBinding(ExposedPort.tcp(port));
+        }
+
+        public CreateContainerOptionsBuilder portOneToOneBinding(ExposedPort port) {
+            return portBinding(new PortBinding(new Ports.Binding(null, String.valueOf(port.getPort())), port));
         }
     }
 }
