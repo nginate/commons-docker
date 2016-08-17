@@ -34,7 +34,7 @@ repositories {
 
 dependencies {
     compile "com.github.nginate:commons-lang:1.0.0"
-    compile 'com.github.docker-java:docker-java:3.0.0'
+    compile 'com.github.docker-java:docker-java:3.0.5'
     compile 'org.slf4j:slf4j-api:1.7.21'
 
     // Utils

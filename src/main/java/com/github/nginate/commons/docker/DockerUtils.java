@@ -2,9 +2,10 @@ package com.github.nginate.commons.docker;
 
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.DockerCmdExecFactory;
+import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientBuilder;
 import com.github.dockerjava.core.DockerClientConfig;
-import com.github.dockerjava.jaxrs.DockerCmdExecFactoryImpl;
+import com.github.dockerjava.jaxrs.JerseyDockerCmdExecFactory;
 import com.github.nginate.commons.docker.client.DockerClientOptions;
 import com.github.nginate.commons.docker.client.NDockerClient;
 import com.github.nginate.commons.docker.client.options.CreateContainerOptions;
@@ -102,16 +103,17 @@ public class DockerUtils {
     }
 
     public static NDockerClient createClient(DockerClientOptions options) {
-        DockerClientConfig.DockerClientConfigBuilder configBuilder = DockerClientConfig.createDefaultConfigBuilder()
+        DockerClientConfig clientConfig = DefaultDockerClientConfig.createDefaultConfigBuilder()
                 .withDockerHost(options.getDockerUri())
-                .withDockerCertPath(options.getDockerCertsPath());
+                .withDockerCertPath(options.getDockerCertsPath())
+                .build();
 
-        DockerCmdExecFactory dockerCmdExecFactory = new DockerCmdExecFactoryImpl()
+        DockerCmdExecFactory dockerCmdExecFactory = new JerseyDockerCmdExecFactory()
                 .withConnectTimeout(options.getConnectionTimeout())
                 .withReadTimeout(options.getReadTimeout())
                 .withMaxPerRouteConnections(options.getMaxRouteConnections());
 
-        DockerClient client = DockerClientBuilder.getInstance(configBuilder)
+        DockerClient client = DockerClientBuilder.getInstance(clientConfig)
                 .withDockerCmdExecFactory(dockerCmdExecFactory)
                 .build();
 
