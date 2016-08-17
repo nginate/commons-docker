@@ -5,7 +5,7 @@ buildscript {
 
     dependencies {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
-        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.9'
+        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.10'
     }
 }
 
@@ -43,12 +43,12 @@ dependencies {
     compile 'org.apache.commons:commons-collections4:4.1'
 
     // Annotation processors
-    compile 'org.projectlombok:lombok:1.16.8', optional
+    compile 'org.projectlombok:lombok:1.16.10', optional
     compile 'com.google.code.findbugs:jsr305:3.0.1', optional
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.testng:testng:6.9.12'
-    testCompile 'org.assertj:assertj-core:3.5.1'
+    testCompile 'org.assertj:assertj-core:3.5.2'
     testCompile 'ch.qos.logback:logback-classic:1.1.7'
 }
 
