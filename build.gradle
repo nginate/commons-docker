@@ -12,7 +12,7 @@ buildscript {
 plugins {
     id 'nebula.optional-base' version '3.1.0'
     id "com.jfrog.bintray" version "1.7.1"
-    id 'net.researchgate.release' version '2.4.0'
+    id 'net.researchgate.release' version '2.4.1'
 }
 
 apply plugin: 'java'
@@ -38,7 +38,7 @@ repositories {
 
 dependencies {
     compile "com.github.nginate:commons-lang:1.0.0"
-    compile 'com.github.docker-java:docker-java:3.0.5'
+    compile 'com.github.docker-java:docker-java:3.0.6'
     compile 'org.slf4j:slf4j-api:1.7.21'
 
     // Utils
@@ -50,10 +50,10 @@ dependencies {
     compile 'org.projectlombok:lombok:1.16.10', optional
     compile 'com.google.code.findbugs:jsr305:3.0.1', optional
 
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.testng:testng:6.9.12'
+    testCompile 'junit:junit:4.+'
+    testCompile 'org.testng:testng:6.9.+'
     testCompile 'org.assertj:assertj-core:3.5.2'
-    testCompile 'ch.qos.logback:logback-classic:1.1.7'
+    testCompile 'ch.qos.logback:logback-classic:1.1.+'
 }
 
 gradle.projectsEvaluated {
