@@ -114,7 +114,6 @@ public class NDockerClient {
         client.logContainerCmd(containerId)
                 .withStdOut(true)
                 .withStdErr(true)
-                .withFollowStream(true)
                 .exec(new DockerLogger(logConsumer))
                 .awaitCompletion();
     }
