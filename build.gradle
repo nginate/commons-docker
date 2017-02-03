@@ -38,21 +38,21 @@ repositories {
 
 dependencies {
     compile "com.github.nginate:commons-lang:1.0.0"
-    compile 'com.github.docker-java:docker-java:3.0.6'
-    compile 'org.slf4j:slf4j-api:1.7.21'
+    compile 'com.github.docker-java:docker-java:3.0.7'
+    compile 'org.slf4j:slf4j-api:1.7.22'
 
     // Utils
-    compile 'com.google.guava:guava:19.0'
-    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'com.google.guava:guava:21.0'
+    compile 'org.apache.commons:commons-lang3:3.5'
     compile 'org.apache.commons:commons-collections4:4.1'
 
     // Annotation processors
-    compile 'org.projectlombok:lombok:1.16.10', optional
+    compile 'org.projectlombok:lombok:1.16.12', optional
     compile 'com.google.code.findbugs:jsr305:3.0.1', optional
 
     testCompile 'junit:junit:4.+'
-    testCompile 'org.testng:testng:6.9.+'
-    testCompile 'org.assertj:assertj-core:3.5.2'
+    testCompile 'org.testng:testng:6.10.+'
+    testCompile 'org.assertj:assertj-core:3.6.1'
     testCompile 'ch.qos.logback:logback-classic:1.1.+'
 }
 
@@ -86,5 +86,5 @@ test {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.1'
+    gradleVersion = '3.3'
 }
